@@ -103,7 +103,7 @@ export default function UplodProduct() {
     <div className="min-h-dvh flex justify-center items-center pt-5 pb-20">
       <div className="min-w-sm sm:min-w-md max-w-2xl mx-auto">
         <form onSubmit={handleSubmit}>
-          <div className="w-full flex flex-col gap-3 bg-slate-100 pt-10 p-7 lg:p-15">
+          <div className="w-full flex flex-col gap-3 bg-white shadow-lg rounded-xl pt-10 p-7 lg:p-15">
             <h2 className="text-3xl mb-3">Upload New Product</h2>
             <h2 className="text-xl mb-3">{message}</h2>
 
@@ -177,7 +177,10 @@ export default function UplodProduct() {
                 }
               </div>
 
-              <button type="submit" disabled={isLoading}>{isLoading ? " wait .... " : "Upload"}</button>
+              <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+                disabled={isLoading}
+              >
+                {isLoading ? "Submitting..." : "Submit Product"}</button>
             </div>
           </div>
         </form >
