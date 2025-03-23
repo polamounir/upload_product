@@ -43,7 +43,7 @@ export async function POST(req: Request) {
 
 export async function GET() {
   try {
-    // Fetch categories from the external API
+    
     const response = await fetch(
       `https://ecommerce.zerobytetools.com/api/categories?page=1&limit=100`,
       {
