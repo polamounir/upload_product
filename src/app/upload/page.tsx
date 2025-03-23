@@ -27,13 +27,25 @@ export default function UplodProduct() {
   const [categories, setCategories] = useState([{
     id: "",
     name: "Select Category",
-  }])
+  }, {
+    "id": "38b41325-0a73-498a-55cd-08dd695a6f25",
+    "name": "Laptops"
+  },
+  {
+    "id": "314ea0a5-2c91-4478-55ce-08dd695a6f25",
+    "name": "Watches"
+  },
+  {
+    "id": "60072ba9-52bf-4c5a-b72f-1f2e841cdf1e",
+    "name": "Mobiles"
+  }
+  ])
   useEffect(() => {
     fetch("https://ecommerce.zerobytetools.com/api/categories?page=1&limit=100")
       .then(response => response.json())
       .then(data => setCategories([{ id: "", name: "Select Category" }, ...data.items]))
       .catch(error => console.error("Error fetching categories:", error));
-  }, [])
+  }, [productData.categoryId])
 
   const handleProductData = (e: React.ChangeEvent<HTMLInputElement>) => {
 
