@@ -27,16 +27,13 @@ export const addProduct = async (
   }
 
   try {
-    const response = await fetch(
-      "https://ecommerce.zerobytetools.com/api/products",
-      {
-        method: "POST",
-        body: productData,
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMzVjYjQyMy1jYzIyLTQwOWMtYTY0YS0wOGRkNjVmYTUzOTgiLCJGdWxsTmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBncmFkZWNvbS5jb20iLCJVc2VyVHlwZSI6IkFkbWluIiwibmJmIjoxNzQyNjU1NzAwLCJleHAiOjE4MDc0NTU3MDAsImlhdCI6MTc0MjY1NTcwMH0.CDkxw5Ttsf78GlwCI7vfjdilAhne7jyOzWMjLOCigB8`,
-        },
-      }
-    );
+    const response = await fetch("/api/proxy", {
+      method: "POST",
+      body: productData,
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMzVjYjQyMy1jYzIyLTQwOWMtYTY0YS0wOGRkNjVmYTUzOTgiLCJGdWxsTmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBncmFkZWNvbS5jb20iLCJVc2VyVHlwZSI6IkFkbWluIiwibmJmIjoxNzQyNjU1NzAwLCJleHAiOjE4MDc0NTU3MDAsImlhdCI6MTc0MjY1NTcwMH0.CDkxw5Ttsf78GlwCI7vfjdilAhne7jyOzWMjLOCigB8`,
+      },
+    });
 
     console.log(response);
     if (!response.ok) throw new Error("Failed to add product");

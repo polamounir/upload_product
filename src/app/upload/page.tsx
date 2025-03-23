@@ -3,7 +3,7 @@
 import { UploadProductTypes } from "@/types"
 import { addProduct } from "@/utils/api";
 import Image from "next/image";
-import {  useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 
 export default function UplodProduct() {
@@ -24,7 +24,7 @@ export default function UplodProduct() {
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState("")
 
-  const categories=[{
+  const [categories, setCategories] = useState([{
     id: "",
     name: "Select Category",
   }, {
@@ -39,7 +39,15 @@ export default function UplodProduct() {
     "id": "60072ba9-52bf-4c5a-b72f-1f2e841cdf1e",
     "name": "Mobiles"
   }
-  ]
+  ])
+
+  useEffect(() => {
+    fetch("https://ecommerce.zerobytetools.com/api/categories?page=1&limit=100")
+      .then(response => response.json())
+      .then(data => setCategories([{ id: "", name: "Select Category" }, ...data.items]))
+      .catch(error => console.error("Error fetching categories:", error));
+  }, [])
+
 
   const handleProductData = (e: React.ChangeEvent<HTMLInputElement>) => {
 
