@@ -106,9 +106,9 @@ export default function UplodProduct() {
 
   return (
     <div className="min-h-dvh flex justify-center items-center pt-5 pb-20">
-      <div className="min-w-sm max-w-2xl mx-auto ">
+      <div className="min-w-sm sm:min-w-md max-w-2xl mx-auto">
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-3 bg-slate-100 p-2 md:p-5 lg:p-10">
+          <div className="w-full flex flex-col gap-3 bg-slate-100 pt-10 p-7 lg:p-15">
             <h2 className="text-3xl mb-3">Upload New Product</h2>
             <h2 className="text-xl mb-3">{message}</h2>
 
@@ -116,7 +116,7 @@ export default function UplodProduct() {
               <div className="flex flex-col justify-center gap-2 lg:flex-row lg:gap-5">
                 <div className="flex flex-col w-full">
                   <label htmlFor="title">Title</label>
-                  <input type="text" id="title" onChange={handleProductData} name="title" value={productData.title} required />
+                  <input type="text" id="title" onChange={handleProductData} name="title" placeholder="Product Title" value={productData.title} required />
                 </div>
 
               </div>
@@ -131,7 +131,7 @@ export default function UplodProduct() {
                 </div>
                 <div className="flex flex-col min-w-[200px]">
                   <label htmlFor="brand">Brand</label>
-                  <input type="text" id="brand" onChange={handleProductData} name="brand" value={productData.brand} required />
+                  <input type="text" id="brand" onChange={handleProductData} name="brand" placeholder="Product Brand" value={productData.brand} required />
                 </div>
               </div>
               <div className="flex flex-col">
@@ -153,7 +153,7 @@ export default function UplodProduct() {
               </div>
               <div className="flex flex-col">
                 <label htmlFor="tags">Tags</label>
-                <input type="text" id="tags" onChange={handleProductData} name="tags" value={productData.tags} required />
+                <input type="text" id="tags" onChange={handleProductData} name="tags" placeholder='Tags (ex:"mobile,samsung,2025")' value={productData.tags} required />
               </div>
               <div className="flex flex-col">
                 <label htmlFor="description">Description</label>
@@ -164,7 +164,7 @@ export default function UplodProduct() {
                     ...productData,
                     description: e.target.value,
                   });
-                }} name="description" value={productData.description} required />
+                }} name="description" placeholder="Product Description" value={productData.description} required />
               </div>
               <div className="flex flex-col">
                 <label htmlFor="images">Product Images</label>
