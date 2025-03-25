@@ -1,10 +1,17 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type ProductTypes = {
     id: string;
     title: string;
+    price: number;
+    stock: number;
+    category: string;
+    brand: string;
+    description: string;
     images: string[];
 };
 
@@ -29,6 +36,7 @@ export default function ManageProducts() {
             }
 
             const data = await res.json();
+            console.log(data);
 
             setProducts(data.items || []);
             setProductsLength(data.totalItems);
@@ -85,7 +93,7 @@ export default function ManageProducts() {
                     </button>
                     <div className="flex  flex-col sm:flex-row justify-center items-center gap-5 dark:text-black ">
                         <div>
-                             products / page
+                            products / page
                             <input type="number" min={10} value={productsPerPage} onChange={(e) => { setProductPerPage(Number(e.target.value)) }} />
                         </div>
                         <div className="flex justify-center items-center mt-4 gap-3">
@@ -112,34 +120,58 @@ export default function ManageProducts() {
 
                 <ul className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 px-10">
                     {products.length > 0 ? (
-                        products.map((product, index) => (
-                            <li
-                                key={product.id}
-                                className="p-3 border rounded-lg shadow-lg hover:bg-gray-100"
-                            >
-                                <div className="flex items-center justify-between">
-                                    <h2>{index + 1}</h2>
-                                    <button
-                                        className="px-3 py-1 rounded-md bg-red-500 text-white"
-                                        onClick={() => handleDeleteProduct(product.id)}
-                                    >
-                                        delete
-                                    </button>
-                                </div>
+                        products.map((product, index) => {
+                            // console.log(product)
+                            return (
+                                <li
+                                    key={product.id}
+                                    className="p-3 border rounded-lg shadow-lg hover:bg-gray-100"
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <h2>{index + 1}</h2>
+                                        <button
+                                            className="px-3 py-1 rounded-md bg-red-500 text-white"
+                                            onClick={() => handleDeleteProduct(product.id)}
+                                        >
+                                            delete
+                                        </button>
+                                    </div>
 
-                                <h2>{product.title}</h2>
-                                <div className="flex flex-wrap justify-evenly items-center gap-2 border-t pt-2">
-                                    {(product.images ?? []).map((image, index) => (
-                                        <img
-                                            key={index}
-                                            src={image}
-                                            alt={product.title}
-                                            className="h-[100px] aspect-square"
-                                        />
-                                    ))}
-                                </div>
-                            </li>
-                        ))
+                                    <h2>{product.title}</h2>
+                                    <p>{product.description}</p>
+                                    <div className="flex flex-col justify-between gap-5 flex-wrap">
+                                        <div className="flex justify-between gap-5 flex-wrap">
+
+                                            <span>Price: ${product.price}</span>
+                                            <span>Stock: {product.stock}</span>
+                                        </div>
+                                        <div className="flex justify-between gap-5 flex-wrap">
+
+                                            <span>Category: {product.category}</span>
+                                            <span>Brand: {product.brand}</span>
+                                        </div>
+                                        {/* 
+                                        <Link href={`/product/${product.id}`}>
+                                            <button className="text-blue-500 hover:text-blue-600">View Details</button>
+                                        </Link> */}
+                                    </div>
+                                    <div className="flex flex-wrap justify-evenly items-center gap-2 border-t pt-2">
+                                        {(product.images ?? []).map((image, index) => (
+                                            <Image
+                                                key={index}
+                                                src={image}
+                                                alt={product.title}
+                                                width={100}
+                                                height={100}
+                                                className="h-[100px] aspect-square"
+                                            />
+                                        ))}
+                                    </div>
+                                </li>
+                            )
+                        }
+
+                        )
                     ) : (
                         <p className="text-gray-500 text-center">No products found.</p>
                     )}

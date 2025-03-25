@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ["ecommerce.zerobytetools.com"],
+    remotePatterns: [
+      { protocol: "https", hostname: "placehold.jp" },
+      { protocol: "https", hostname: "cdn.dummyjson.com" },
+      { protocol: "https", hostname: "ecommerce.zerobytetools.com" },
+    ],
+  },
   async rewrites() {
     return [
       {
