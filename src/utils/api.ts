@@ -1,37 +1,53 @@
 import { UploadProductTypes } from "@/types";
 
-export const addProduct = async (
+const API_BASE_URL = "https://ecommerce.zerobytetools.com";
+
+// Function to fetch categories
+export async function fetchCategories() {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/categories?page=1&limit=100`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMzVjYjQyMy1jYzIyLTQwOWMtYTY0YS0wOGRkNjVmYTUzOTgiLCJGdWxsTmFtZSI6IkFkbWluIiwiZW1haWwiOiJhZG1pbkBncmFkZWNvbS5jb20iLCJVc2VyVHlwZSI6IkFkbWluIiwibmJmIjoxNzQyNjU1NzAwLCJleHAiOjE4MDc0NTU3MDAsImlhdCI6MTc0MjY1NTcwMH0.CDkxw5Ttsf78GlwCI7vfjdilAhne7jyOzWMjLOCigB8`,
+        },
+        next: { revalidate: 3600 }, // Cache response for 1 hour
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch categories");
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error;
+  }
+}
+
+// Function to add a new product
+export async function addNewProduct(
   product: UploadProductTypes,
   images: File[]
-) => {
+) {
   const productData = new FormData();
 
-  productData.append("title", product.title);
-  productData.append("price", product.price.toString()); // Ensure price is a string
-  productData.append("brand", product.brand);
-  productData.append("stock", product.stock.toString()); // Ensure stock is a string
-  productData.append("categoryId", product.categoryId);
-  productData.append("tags", product.tags);
-  productData.append("description", product.description);
-// -----------------------------------------
-  // console.log(images);
-  // const imageArray = Array.from(images);
-  
-  // console.log(images);
+  Object.entries(product).forEach(([key, value]) => {
+    productData.append(
+      key,
+      typeof value === "number" ? value.toString() : value
+    );
+  });
 
   images.forEach((image, index) => {
     productData.append(`images[${index}]`, image);
   });
 
-  
-
-  console.log("FormData entries:");
-  for (const pair of productData.entries()) {
-    console.log(pair);
-  }
-
   try {
-    const response = await fetch("https://ecommerce.zerobytetools.com/api/products", {
+    const response = await fetch(`${API_BASE_URL}/api/products`, {
       method: "POST",
       body: productData,
       headers: {
@@ -39,16 +55,24 @@ export const addProduct = async (
       },
     });
 
-    console.log(response);
-    console.log(productData)
-    if (!response.ok) throw new Error("Failed to add product");
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      return {
+        status: response.status,
+        message: errorData.message || "Failed to add product",
+      };
+    }
 
-    return 200;
+    return {
+      status: response.status,
+      message: "Product added successfully!",
+    };
   } catch (error) {
-    console.error(error);
-    console.log("Failed to add product");
-    return "Failed to add product";
-  } finally {
-    console.log("Ended");
+    console.error("Failed to add new product:", error);
+
+    return {
+      status: 500,
+      message: "Internal server error. Please try again.",
+    };
   }
-};
+}

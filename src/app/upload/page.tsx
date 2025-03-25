@@ -1,9 +1,10 @@
 "use client"
 
 import { UploadProductTypes } from "@/types"
+import { addNewProduct, fetchCategories } from "@/utils/api";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react"
-import { addNewProduct, fetchCategories } from "../api/products/route";
+
 import { useDropzone } from "react-dropzone";
 
 // Validation function for form inputs
@@ -54,26 +55,26 @@ export default function UploadProduct() {
   ])
 
   // Fetch categories on component mount
-  // useEffect(() => {
-  //   const loadCategories = async () => {
-  //     try {
-  //       const response = await fetchCategories();
-  //       if (response.items) {
-  //         setCategories([
-  //           { id: "", name: "Select Category" },
-  //           ...response.items
-  //         ]);
-  //       }
-  //     } catch (error) {
-  //       setMessage({
-  //         text: "Failed to load categories. Please refresh the page.",
-  //         type: 'error'
-  //       });
-  //     }
-  //   };
-
-  //   loadCategories();
-  // }, [])
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const response = await fetchCategories();
+        if (response.items) {
+          setCategories([
+            { id: "", name: "Select Category" },
+            ...response.items
+          ]);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        setMessage({
+          text: "Failed to load categories. Please refresh the page.",
+          type: 'error'
+        });
+      }
+    }
+    loadCategories();
+  }, [])
 
   // Generic input handler
   const handleInputChange = (
