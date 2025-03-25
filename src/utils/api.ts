@@ -14,20 +14,24 @@ export const addProduct = async (
   productData.append("tags", product.tags);
   productData.append("description", product.description);
 // -----------------------------------------
-  console.log(images);
-  const imageArray = Array.from(images);
+  // console.log(images);
+  // const imageArray = Array.from(images);
+  
+  // console.log(images);
 
-  imageArray.forEach((image, index) => {
+  images.forEach((image, index) => {
     productData.append(`images[${index}]`, image);
   });
 
+  
+
   console.log("FormData entries:");
   for (const pair of productData.entries()) {
-    console.log(pair[0], pair[1]);
+    console.log(pair);
   }
 
   try {
-    const response = await fetch("/api/proxy", {
+    const response = await fetch("https://ecommerce.zerobytetools.com/api/products", {
       method: "POST",
       body: productData,
       headers: {
@@ -36,6 +40,7 @@ export const addProduct = async (
     });
 
     console.log(response);
+    console.log(productData)
     if (!response.ok) throw new Error("Failed to add product");
 
     return 200;
