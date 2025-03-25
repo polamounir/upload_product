@@ -75,7 +75,7 @@ export default function ManageProducts() {
                 <h1 className="text-2xl font-bold text-center text-gray-800">
                     All Products
                 </h1>
-                <div className="flex justify-between items-center px-10 mt-20">
+                <div className="flex flex-col lg:flex-row justify-between items-center px-10 mt-20">
                     <button
                         onClick={getAllProducts}
                         disabled={loading}
@@ -83,7 +83,7 @@ export default function ManageProducts() {
                     >
                         {loading ? "Loading..." : "Refresh Products"}
                     </button>
-                    <div className="flex items-center gap-5">
+                    <div className="flex  flex-col sm:flex-row justify-center items-center gap-5 dark:text-black ">
                         <div>
                              products / page
                             <input type="number" min={10} value={productsPerPage} onChange={(e) => { setProductPerPage(Number(e.target.value)) }} />
@@ -91,14 +91,14 @@ export default function ManageProducts() {
                         <div className="flex justify-center items-center mt-4 gap-3">
                             <span>Page {pageNumber}</span>
                             <button
-                                className="bg-blue-400 text-white px-5 py-2 rounded-md disabled:bg-gray-500 "
+                                className="bg-blue-400 px-5 py-2 rounded-md disabled:bg-gray-500 "
                                 onClick={() => handlePageChange(-1)}
                                 disabled={pageNumber <= 1}
                             >
                                 Previous
                             </button>
                             <button
-                                className="bg-blue-400 text-white px-5 py-2 rounded-md disabled:bg-gray-500 "
+                                className="bg-blue-400 px-5 py-2 rounded-md disabled:bg-gray-500 "
                                 onClick={() => handlePageChange(1)}
                                 disabled={productsLength / productsPerPage <= pageNumber}
                             >
