@@ -244,7 +244,7 @@ export default function UploadProduct() {
                 <label htmlFor="description">Description</label>
                 <textarea id="description" onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   e.preventDefault();
-                  setMessage('')
+                  setMessage({ text: '', type: 'success' })
                   setProductData({
                     ...productData,
                     description: e.target.value,
