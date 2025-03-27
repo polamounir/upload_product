@@ -90,7 +90,7 @@ export default function UploadProduct() {
 
   // Image file handler
   const handleProductImages = (files: File[]) => {
-    const newFiles = files.slice(0, 10 - productImages.length);
+    const newFiles = files.slice(0, 5 - productImages.length);
 
     const validFiles = newFiles.filter((file) => {
       const validTypes = [
@@ -102,7 +102,7 @@ export default function UploadProduct() {
         "image/avif",
         "image/heic",
       ];
-      const maxSize = 5 * 1024 * 1024; // 5MB
+      const maxSize = 10 * 1024 * 1024; // 5MB
       return validTypes.includes(file.type) && file.size <= maxSize;
     });
 
@@ -113,7 +113,7 @@ export default function UploadProduct() {
   const { getRootProps, getInputProps } = useDropzone({
     accept: { "image/*": [] },
     onDrop: (acceptedFiles) => handleProductImages(acceptedFiles),
-    maxFiles: 10,
+    maxFiles: 5,
   });
 
 
@@ -254,24 +254,30 @@ export default function UploadProduct() {
               </div>
             </div>
 
-            <div
-              {...getRootProps()}
-              className="border-2 border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500"
-            >
-              <input {...getInputProps()} />
-              <p className="text-gray-500">Drag & drop images here, or click to select files</p>
-            </div>
+            <div>
 
-            {/* File Input (Optional) */}
-            <input
-              ref={fileInputRef}
-              type="file"
-              id="images"
-              onChange={(e) => handleProductImages(Array.from(e.target.files || []))}
-              multiple
-              accept="image/*"
-              className="hidden"
-            />
+                <label htmlFor="images">Upload Image <span className="text-gray-400">Max 5 images</span> </label>
+              <div
+                {...getRootProps()}
+                className="border-2 border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500"
+              >
+                <input {...getInputProps()} />
+                <p className="text-gray-500">Drag & drop images here, or click to select files</p>
+              </div>
+
+              {/* File Input (Optional) */}
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                id="images"
+                onChange={(e) => handleProductImages(Array.from(e.target.files || []))}
+                multiple
+                accept="image/*"
+                className="hidden"
+              />
+
+            </div>
 
             <div className="flex justify-center items-center gap-3 flex-wrap">
               {productImages.map((image, index) => (
