@@ -204,7 +204,6 @@ export default function UploadProduct() {
                   <label htmlFor="title">Title</label>
                   <input type="text" id="title" onChange={handleInputChange} name="title" placeholder="Product Title" value={productData.title} required />
                 </div>
-
               </div>
               <div className="flex flex-col justify-center gap-2 lg:flex-row lg:gap-5">
                 <div className="flex flex-col">
